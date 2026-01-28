@@ -35,7 +35,10 @@ app.innerHTML = `
           Hoy cierras una meta enorme, y verte lograrlo me hace admirarte más que nunca.
           Gracias por tu esfuerzo, tu corazón y todo lo que eres.  
           <br><br>
-          Esto recién comienza… y yo quiero estar a tu lado en todo lo que viene. ❤️
+          Esto recién comienza… y yo quiero estar a tu lado en todo lo que viene ❤️
+
+          <br><br>
+          Pensaba hacerte algo mucho más elaborado, pero programar con una sola mano es complicado 😅
         </p>
       </div>
 

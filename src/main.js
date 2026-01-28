@@ -32,13 +32,16 @@ app.innerHTML = `
       <div class="msg">
         <h3>Mi mensaje para ti</h3>
         <p>
-          Hoy cierras una meta enorme, y verte lograrlo me hace admirarte más que nunca.
-          Gracias por tu esfuerzo, tu corazón y todo lo que eres.  
+          Amor, hoy celebramos tu logro más grande: terminaste Derecho en la Universidad Ricardo Palma. 🎓⚖️
           <br><br>
-          Esto recién comienza… y yo quiero estar a tu lado en todo lo que viene ❤️
-
+          Me enamora tu disciplina, tu valentía y la forma en que nunca te rendiste, incluso en los días pesados.
+          Gracias por dejarme acompañarte desde el 25/06/2019: cada paso tuyo lo siento como una victoria de los dos.
           <br><br>
-          Pensaba hacerte algo mucho más elaborado, pero programar con una sola mano es complicado 😅
+          Hoy te gradúas… y yo solo puedo decirte esto:  
+          <strong>me siento infinitamente orgulloso de ti.</strong>  
+          <br><br>
+          Con todo mi amor,  
+          Mateo ❤️
         </p>
       </div>
 

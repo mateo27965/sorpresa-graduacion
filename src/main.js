@@ -1,8 +1,8 @@
 const photos = [
-  "/public/fotos/01.jpg",
-  "/public/fotos/02.jpg",
-  "/public/fotos/03.jpg",
-  "/public/fotos/04.jpg",
+  "public/fotos/01.jpg",
+  "public/fotos/02.jpg",
+  "public/fotos/03.jpg",
+  "public/fotos/04.jpg",
   // agrega más si quieres
 ];
 

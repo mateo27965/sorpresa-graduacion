@@ -12,7 +12,7 @@ const photos = [
   "public/fotos/11.jpg",
   "public/fotos/12.jpg",
   "public/fotos/13.jpg",
-  "public/fotos/14.jpg",  
+  "public/fotos/14.jpg",
 ];
 
 const app = document.querySelector("#app");
@@ -20,6 +20,14 @@ const app = document.querySelector("#app");
 app.innerHTML = `
   <div class="bg">
     <div class="noise"></div>
+    <div class="transition" id="transition" aria-hidden="true">
+      <div class="envelope">
+        <div class="envTop"></div>
+        <div class="envBody"></div>
+        <div class="seal">💛</div>
+      </div>
+      <div class="tText">Viajando a tu carta…</div>
+  </div>
 
     <canvas id="confetti"></canvas>
     <div class="toast" id="toast">Eres lo mejor que me ha pasado!</div>
@@ -42,12 +50,13 @@ app.innerHTML = `
           <div class="heroTitle">Felicidades mi graduada! 🎓</div>
 
           <p class="heroLead">
-            Hoy no solo celebramos tu graduación. Celebramos tu constancia, tu fuerza y todo lo que eres.
+            Paola, esta es una carta para ti.  
+            Un pequeño viaje por nuestros momentos… y lo orgulloso que me siento de verte lograrlo. 🎓⚖️
           </p>
 
 
           <button class="cta" id="openBtn">
-            Abrir sorpresa
+            Abrir carta ✉️
             <span class="ctaIcon">→</span>
           </button>
 
@@ -498,6 +507,86 @@ style.textContent = `
   transform: scale(1.03);
 }
 
+/* ====== Responsive iPhone safe-area ====== */
+.shell{
+  padding: calc(18px + env(safe-area-inset-top)) 18px calc(18px + env(safe-area-inset-bottom));
+}
+
+/* Panel en iPhone: que no se “pase” y sea scrolleable */
+.panel{
+  max-height: calc(100vh - 36px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Foto: altura adaptable (más pro) */
+#photo{
+  height: clamp(250px, 42vh, 380px);
+}
+
+/* ====== Transición “viaje a la carta” ====== */
+.transition{
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  display: grid;
+  place-items: center;
+  background: radial-gradient(900px 600px at 50% 35%, rgba(255,255,255,.10), transparent 60%),
+              rgba(5,6,10,.72);
+  backdrop-filter: blur(16px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .25s ease;
+}
+.transition.show{
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.envelope{
+  width: 110px;
+  height: 78px;
+  position: relative;
+  transform: translateY(20px) scale(.95);
+  animation: flyIn .85s cubic-bezier(.2,.9,.2,1) forwards;
+}
+@keyframes flyIn{
+  0%{ transform: translateY(26px) scale(.92); opacity: 0; }
+  100%{ transform: translateY(0) scale(1); opacity: 1; }
+}
+.envBody{
+  position: absolute; inset: 0;
+  border-radius: 18px;
+  background: rgba(255,255,255,.12);
+  border: 1px solid rgba(255,255,255,.18);
+  box-shadow: 0 24px 70px rgba(0,0,0,.35);
+}
+.envTop{
+  position: absolute;
+  left: 10px; right: 10px; top: 10px;
+  height: 44px;
+  border-radius: 14px;
+  background: linear-gradient(180deg, rgba(255,255,255,.18), rgba(255,255,255,.08));
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+  border: 1px solid rgba(255,255,255,.14);
+}
+.seal{
+  position: absolute;
+  left: 50%; top: 52%;
+  transform: translate(-50%, -50%);
+  width: 34px; height: 34px;
+  display: grid; place-items: center;
+  border-radius: 999px;
+  background: rgba(0,0,0,.25);
+  border: 1px solid rgba(255,255,255,.18);
+}
+
+.tText{
+  margin-top: 14px;
+  font-size: 13px;
+  color: rgba(255,255,255,.80);
+  letter-spacing: .2px;
+}
 
 `;
 document.head.appendChild(style);
@@ -648,15 +737,45 @@ function go(nextIdx) {
   if (navigator.vibrate) navigator.vibrate(6);
 }
 
+
+const transition = document.getElementById("transition");
+
 document.querySelector("#openBtn").onclick = () => {
-  screen1.classList.remove("is-active");
-  screen1.setAttribute("aria-hidden", "true");
-  screen2.classList.add("is-active");
-  screen2.setAttribute("aria-hidden", "false");
-  if (navigator.vibrate) navigator.vibrate([20, 30, 20]);
+  // muestra transición
+  transition.classList.add("show");
+  transition.setAttribute("aria-hidden", "false");
+
+  if (navigator.vibrate) navigator.vibrate([12, 18, 12]);
 
   confettiBurst({ count: 160 });
+
+  setTimeout(() => {
+    // cambia de pantalla
+    screen1.classList.remove("is-active");
+    screen1.setAttribute("aria-hidden", "true");
+    screen2.classList.add("is-active");
+    screen2.setAttribute("aria-hidden", "false");
+
+    // oculta transición
+    transition.classList.remove("show");
+    transition.setAttribute("aria-hidden", "true");
+
+    // pequeño impacto visual en la carta (flash)
+    const letter = document.querySelector(".letter");
+    letter.style.transition = "transform .25s ease, box-shadow .25s ease";
+    letter.style.transform = "translateY(-2px)";
+    letter.style.boxShadow = "0 26px 90px rgba(0,0,0,.45)";
+
+    document.querySelector(".letter").scrollIntoView({ behavior: "smooth", block: "start" });
+
+    setTimeout(() => {
+      letter.style.transform = "translateY(0)";
+      letter.style.boxShadow = "";
+    }, 260);
+
+  }, 850);
 };
+
 
 document.querySelector("#backBtn").onclick = () => {
   screen2.classList.remove("is-active");

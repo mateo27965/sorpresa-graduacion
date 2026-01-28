@@ -20,50 +20,52 @@ const app = document.querySelector("#app");
 app.innerHTML = `
   <div class="bg">
     <div class="noise"></div>
+
+    <!-- Transición -->
     <div class="transition" id="transition" aria-hidden="true">
-      <div class="envelope">
+      <div class="envelope" aria-hidden="true">
         <div class="envTop"></div>
         <div class="envBody"></div>
-        <div class="seal">💛</div>
+        <div class="seal">❤️</div>
       </div>
       <div class="tText">Viajando a tu carta…</div>
-  </div>
+    </div>
 
-    <canvas id="confetti"></canvas>
+    <!-- FX -->
+    <canvas id="confetti" aria-hidden="true"></canvas>
     <div class="toast" id="toast">Eres lo mejor que me ha pasado!</div>
 
     <main class="shell">
       <!-- SCREEN 1 -->
       <section class="view is-active" id="screen1" aria-hidden="false">
-        <div class="topbar">
+        <header class="topbar">
           <div class="brand">
-            <div class="logo">⚖️</div>
+            <div class="logo" aria-hidden="true">⚖️</div>
             <div class="brandText">
               <div class="brandTitle">Paola Romero</div>
               <div class="brandSub">Derecho • Universidad Ricardo Palma</div>
             </div>
           </div>
-          <div class="pill">25·06·2019 — ∞</div>
-        </div>
+          <div class="pill" aria-label="Fecha">25·06·2019 — ∞</div>
+        </header>
 
         <div class="heroCard">
-          <div class="heroTitle">Felicidades mi graduada! 🎓</div>
+          <div class="heroTitle">Felicidades, mi graduada 🎓</div>
 
           <p class="heroLead">
-            Paola, esta es una carta para ti.  
+            Mi vida, esta es una carta para ti.
+            <br>
             Un pequeño viaje por nuestros momentos… y lo orgulloso que me siento de verte lograrlo. 🎓⚖️
           </p>
 
-
           <button class="cta" id="openBtn">
             Abrir carta ✉️
-            <span class="ctaIcon">→</span>
+            <span class="ctaIcon" aria-hidden="true">→</span>
           </button>
-
         </div>
 
         <footer class="footer">
-          Hecho con amor por <strong>Mateo</strong> 💛
+          Hecho con amor por <strong>Mateo</strong> ❤️
         </footer>
       </section>
 
@@ -80,51 +82,64 @@ app.innerHTML = `
               </div>
             </div>
 
-            <div class="miniPill">Paola ⚖️</div>
+            <div class="miniPill">25·06·2019 — ∞</div>
           </div>
 
-          <div class="progress">
+          <div class="progress" aria-hidden="true">
             <div class="progressFill" id="progressFill"></div>
           </div>
 
           <div class="carousel" id="carousel">
-            <button class="navBtn" id="prev" aria-label="Anterior">‹</button>
+            <button class="navBtn" id="prev" aria-label="Foto anterior">‹</button>
 
             <div class="photoFrame">
               <img id="photo" alt="Foto de ustedes" />
-              <div class="photoGlow"></div>
+              <div class="photoGlow" aria-hidden="true"></div>
             </div>
 
-            <button class="navBtn" id="next" aria-label="Siguiente">›</button>
+            <button class="navBtn" id="next" aria-label="Foto siguiente">›</button>
           </div>
 
-          <div class="dots" id="dots"></div>
+          <div class="dots" id="dots" aria-hidden="true"></div>
 
-          <div class="letter">
-            <div class="letterHead">
-              <div class="letterTitle">Para mi Abogada Paola</div>
-              <div class="letterSub">Un mensaje corto, pero con todo mi corazón.</div>
+          <!-- Carta -->
+          <div class="letter letterPaper" id="letterCard">
+            <div class="letterTop">
+              <div class="stamp" aria-hidden="true">
+                <img class="stampImg" src="public/yo.png" alt="" />
+              </div>
+              <div class="letterMeta">
+                <div class="letterTo">Para mi Abogada</div>
+                <div class="letterName">Paola Romero ⚖️</div>
+              </div>
+
+              <div class="sealWax" aria-hidden="true">❤️</div>
             </div>
 
-            <p class="letterText">
-              Amor, hoy celebramos un logro enorme: terminaste tu carrera de Derecho en la Universidad Ricardo Palma,
-              y lo hiciste a tu manera: con constancia, con fuerza y con esa disciplina tuya que tanto admiro. 🎓⚖️
-              <br><br>
-              Me enamora tu valentía y la forma en que nunca te rendiste, incluso en los días más pesados.
-              Gracias por dejarme acompañarte desde el 25/06/2019: cada paso tuyo lo siento como una victoria de los dos.
-              <br><br>
-              Hoy te gradúas… y yo solo puedo decirte esto:
-              <strong class="proud">me siento infinitamente orgulloso de ti.</strong>
-              <br><br>
-              Con todo mi amor,<br>
-              Mateo ❤️
-            </p>
+            <div class="letterDivider" aria-hidden="true"></div>
+
+            <div class="letterBody">
+              <p class="letterText">
+                Amor, hoy celebramos un logro enorme: terminaste tu carrera de Derecho en la Universidad Ricardo Palma,
+                y lo hiciste a tu manera: con constancia, con fuerza y con esa disciplina tuya que tanto admiro. 🎓⚖️
+                <br><br>
+                Me enamora tu valentía y la forma en que nunca te rendiste, incluso en los días más pesados.
+                Gracias por dejarme acompañarte desde el 25/06/2019: cada paso tuyo lo siento como una victoria de los dos.
+                <br><br>
+                Hoy te gradúas… y yo solo puedo decirte esto:
+                <span class="proudLine">me siento infinitamente orgulloso de ti.</span>
+                <br><br>
+                Con todo mi amor,<br>
+                <span class="sign">Mateo ❤️</span>
+              </p>
+            </div>
           </div>
         </div>
       </section>
     </main>
   </div>
 `;
+
 
 const style = document.createElement("style");
 style.textContent = `
@@ -586,6 +601,165 @@ style.textContent = `
   font-size: 13px;
   color: rgba(255,255,255,.80);
   letter-spacing: .2px;
+}
+
+
+/* ===== Carta premium (papel real) ===== */
+.letterPaper{
+  position: relative;
+  border-radius: 20px;
+  padding: 16px 16px 18px;
+  border: 1px solid rgba(255,255,255,.16);
+  background:
+    radial-gradient(900px 300px at 20% 0%, rgba(255,255,255,.14), transparent 60%),
+    linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.06));
+  box-shadow: 0 26px 80px rgba(0,0,0,.42);
+  overflow: hidden;
+}
+
+/* textura sutil tipo papel */
+.letterPaper::before{
+  content:"";
+  position:absolute; inset:0;
+  background-image:
+    linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px);
+  background-size: 100% 22px; /* líneas de carta */
+  opacity: .35;
+  pointer-events:none;
+}
+
+/* brillo diagonal como hoja */
+.letterPaper::after{
+  content:"";
+  position:absolute;
+  inset:-40%;
+  background: linear-gradient(135deg, transparent 45%, rgba(255,255,255,.10), transparent 55%);
+  transform: rotate(8deg);
+  opacity: .35;
+  pointer-events:none;
+}
+
+.letterTop{
+  display:flex;
+  align-items:center;
+  gap: 12px;
+  position: relative;
+  z-index: 1;
+}
+
+.stamp{
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,.18);
+  background: rgba(0,0,0,.18);
+  display: grid;
+  place-items: center;
+}
+
+.stampImg{
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;      /* LLENA */
+  object-position: center;
+}
+
+.stampInner{
+  font-weight: 800;
+  font-size: 11px;
+  letter-spacing: .8px;
+  opacity: .92;
+}
+
+.letterMeta{
+  flex: 1;
+  min-width: 0;
+}
+.letterTo{
+  font-size: 11px;
+  color: rgba(255,255,255,.70);
+  letter-spacing: .3px;
+  text-transform: uppercase;
+}
+.letterName{
+  font-family: var(--serif);
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 1.1;
+  margin-top: 2px;
+}
+.letterFrom{
+  margin-top: 4px;
+  font-size: 12px;
+  color: rgba(255,255,255,.60);
+}
+
+.sealWax{
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.16), rgba(0,0,0,.20));
+  border: 1px solid rgba(255,255,255,.18);
+  display:grid;
+  place-items:center;
+  box-shadow: 0 14px 40px rgba(0,0,0,.35);
+}
+
+.letterDivider{
+  height: 1px;
+  margin: 12px 0 12px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.18), transparent);
+  position: relative;
+  z-index: 1;
+}
+
+.letterBody{
+  position: relative;
+  z-index: 1;
+}
+
+.letterText{
+  margin: 0;
+  color: rgba(255,255,255,.88);
+  line-height: 1.65;
+  font-size: 15px;
+}
+
+/* línea “subrayada” como promesa */
+.proudLine{
+  display: inline-block;
+  font-weight: 800;
+  color: rgba(255,255,255,.95);
+  padding: 2px 6px;
+  border-radius: 10px;
+  background: rgba(255,255,255,.08);
+  border: 1px solid rgba(255,255,255,.14);
+}
+
+/* firma más elegante */
+.sign{
+  font-family: var(--serif);
+  font-weight: 700;
+  font-size: 16px;
+}
+
+/* en móvil: que respire más */
+@media (max-width: 420px){
+  .letterPaper{ padding: 14px; }
+  .letterName{ font-size: 17px; }
+  .letterText{ font-size: 14.5px; }
+}
+
+
+.letterPaper{
+  transform-origin: top center;
+  animation: letterOpen .55s cubic-bezier(.2,.9,.2,1) both;
+}
+@keyframes letterOpen{
+  from{ transform: translateY(8px) scale(.985); opacity: 0; }
+  to{ transform: translateY(0) scale(1); opacity: 1; }
 }
 
 `;
